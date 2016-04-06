@@ -12,20 +12,23 @@ class Animal {
         Console.WriteLine("Animal class walk method");
         speed = speed + (0.1 * legs);
     }
-}
 
-// Derived class
-class Lizard : Animal {
-    // Adding additional properties to what is inherited from Animal
-    public string scaleColor { get; set; }
-    public bool camouflage { get; set; }
-    public bool Wild { get; set; }
-
-    // Redefining the base class implementation
-    public override void walk () {
-        Console.WriteLine("Lizard class walk method");
-        speed = speed + (0.2 * legs);
+    public virtual void eat (string food) {
+      Console.WriteLine("Currently eating {0}", food);
     }
+
+    public virtual void eat (string food, int time) {
+      Console.WriteLine("Currently eating {0}, and will be for {1} minutes", food, time);
+    }
+
+    // public string _food {
+    //   get { return _food; }
+    //   set {
+    //     if (value != "") {
+    //       _food = value;
+    //     }
+    //   }
+    // }
 }
 
 class Species : Animal {
@@ -42,27 +45,35 @@ class Giraffe : Species {
 class Tiger : Species {
     public string stripePattern { get; set; }
     public int claws { get; set; }
+
+    public override void eat (string food) {
+      if (food == "meat" || food == "beans") {
+        base.eat(food);
+      } else {
+        Console.WriteLine("A Tiger can't eat that though.");
+      }
+    } 
+
+    public override void eat (string food, int time) {
+      if (food == "meat" || food == "beans") {
+        base.eat(food, time);
+      } else {
+        Console.WriteLine("A Tiger can't eat that though.");
+      }
+    } 
+
+    public Tiger (int clawsNum) {
+      claws = clawsNum;
+    }
 }
 
-Tiger jeff = new Tiger();
-jeff.claws = 18;
+Tiger jeff = new Tiger(18);
+// jeff.claws = 18;
 jeff.stripePattern = "Orange and Black";
 
 Console.WriteLine("Jeff is a tiger with {0} claws and {1} stripes", jeff.claws, jeff.stripePattern);
+// example of or overwritten method
+jeff.eat("meat", 15);
 
-
-// Create a Lizard
-Lizard larry = new Lizard();
-// larry.legs = 4;
-// larry.scaleColor = "Brown";
-// larry.camouflage = false;
-// larry.walk();
-
-Console.WriteLine("A {0} lizard moving at {1} m/s", larry.scaleColor, larry.speed);
-
-// Create an Animal
-Animal andy = new Animal();
-andy.legs = 4;
-andy.walk();
-
-Console.WriteLine("An animal moving at {0} m/s", andy.speed);
+Animal jerry = new Animal();
+jerry.eat("cereal", 5);
